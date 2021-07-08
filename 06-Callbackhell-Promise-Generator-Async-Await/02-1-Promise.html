@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery-3.1.1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>Text #1</div>
+    <div>Text #2</div>
+    <div>Text #3</div>
+
+    <script>
+     
+     // async task returns a promise (it promises that it will return a value later.)
+     // Promise constructor function (Promise) runs the function parameter immediately
+     // When you create a promise, you start async task.
+     function animate(obj, animParams, duration) {
+         return new Promise(function(resolve, reject) {
+            obj.animate(animParams, duration, () => {
+                resolve(); // does not have to return a value, it just starts "then" callback.  
+            });
+         });
+     }
+
+     
+     // We turn nested structure (callback hell) into linear one.
+     // Easy to manage animation order
+     // we register callback functions that will be called when promise object has a value, otherwise, it waits
+     animate( $("div:first"), {"font-size" : "30px"}, 2000)
+     .then(() =>{
+        return animate( $("div:eq(1)"), {"font-size" : "30px"}, 2000);
+     })
+     .then(() => {
+        return animate( $("div:last"), {"font-size" : "30px"}, 2000);
+     })
+     .then(()=>{
+        $("body").append("<p>Animation is over</p>");
+     });
+
+     $("body").prepend("<p>Animation Started</p>");
+
+    </script>
+</body>
+</html>

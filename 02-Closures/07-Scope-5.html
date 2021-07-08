@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+    function counter(n) {
+        var count = n ; // count is like a hidden variable.
+        setTimeout( function() {
+            console.log("Counter Created starting from " + count);
+        }, 1000); 
+        return {
+            inc : function() { count++;},
+            get : function() { return count;}
+        }
+    }
+
+   // Can I move setTimeout callback to outside of counter function?? (NO)
+
+
+    // c1.get() and c1.inc() are closures, since they remember the state when they were cretated.
+    var c1 = counter(10);
+    console.log(c1.get()); // 10
+    c1.inc();
+    console.log(c1.get()); // 11
+
+    var c2 = counter(20);
+    c2.inc();
+    c2.inc();
+    console.log(c2.get()); // 22
+
+    
+    </script>
+</body>
+</html>

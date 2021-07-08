@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery-3.1.1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>Text #1</div>
+    <div>Text #2</div>
+    <div>Text #3</div>
+
+    <script>
+     // Callback dependency between async animations.
+    /* $("div:first").animate({"font-size" : "30px"}, 2000);   
+     $("div:eq(1)").animate({"font-size" : "30px"}, 2000);   
+     $("div:last").animate({"font-size" : "30px"}, 2000);   */
+     
+
+     // animate({properties to animate}, duration, callback when the animation ends)
+
+    // One callback depends on the result of other callback for sync or async tasks.
+    //  (This is called callback-hell problem)
+    // Hard to change animation order. 
+    
+    $("div:first").animate({"font-size" : "30px"}, 2000, function(){
+        $("div:eq(1)").animate({"font-size" : "30px"}, 2000, function() {
+            $("div:last").animate({"font-size" : "30px"}, 2000, function(){
+                $("body").append("<p><b>Animation is over</b></p>");
+            });
+        });
+      }); 
+
+    
+    
+      
+     
+      $("body").prepend("<p>Animation Started</p>");
+      $(window).click(e => { $("body").append("<p>click on window</p>");})
+
+    </script>
+</body>
+</html>

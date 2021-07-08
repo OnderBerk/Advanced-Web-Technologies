@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            // From Book "Understanding ECMAScript 6", Nicholas Zakas 
+            // var is global scope, and a property of the global object. (no block scope)
+            // let/const local/block scope (lexical scope), not part of global object
+            var num1 = 5 ;
+            var num1 = 10 ;
+            let num2 = 5 ;
+            // let num2 = 7 ;  // Already defined. No Redeclaration
+
+
+            // 1. Block Scope ( Global Scope, Function Scope)
+            // it creates a new Execution Context for block scope and
+            // CEX = block scope, in this context there is no "this", parent is current EC (GEC in this example)
+            if ( true ) {
+                // BEC = { user: "ali", "num" : 10 , parent: GEC }, GEC= { num1: 10, num2: 5, age: 5, this: window, parent:null}  CEX = BEC
+                var age = 5 ;  // no block scope. (hoisted globally)
+                let user = "ali" ;
+                const NUM = 10 ;
+            }
+
+            // CEX = GEC, deletes BEC since it is unreachable. Garbage Collector deletes BEC, logically, it is unreachle.
+          
+           console.log(age) ; // you can still access age created in block scope
+           // console.log(user) ; // throw exception
+           // console.log(NUM) ; // throw exception
+          
+           // 2. Constant Reference
+           const user = { name: "ali"} ;
+           //  user = null ; // throws exception
+           // user = {} ; // throws exception
+           user.name = "veli" ; // value can change.
+           
+           // 3. for loop
+           let list = [] ;
+           // test with "let i=0"
+           // in each iteration, new i is created in "let"
+           // var i creates variable in global scope not in block scope,
+           // therefore there is only one i in global scope, function() callback's lexical scope is block execution context,BEC
+           // BEC = { parent: GEC}, for all 5 functions { Scope: BEC}
+           // it can access variable i in global, and at the end of loop, i is equal to 5.
+           
+           // BEC0 = { parent: GEC}, F0 = { Scope: BEC0}
+           // BEC1 = { parent: GEC}, F1 = { Scope: BEC1}
+           // BEC2 = { parent: GEC}, F2 = { Scope: BEC2}
+           // BEC3 = { parent: GEC}, F3 = { Scope: BEC3}
+           // BEC4 = { parent: GEC}, F4 = { Scope: BEC4}
+           
+
+           // if we use "let i = 0",
+           // For each iteration, 
+           // BEC0 = { i:0, parent: GEC} , F0 = { Scope: BEC0}
+           // BEC1 = { i:1, parent: GEC} , F1 = { Scope: BEC1}
+           // BEC2 = { i:2, parent: GEC} , F2 = { Scope: BEC2}
+           // BEC3 = { i:3, parent: GEC} , F3 = { Scope: BEC3}
+           // BEC4 = { i:4, parent: GEC} , F4 = { Scope: BEC4}
+
+           for ( var i=0; i<5; i++) {
+               list.push(function() { console.log(i);}) ;
+           }
+
+           // New way of traversing over iterable objects (arrays, collections)
+           for (let f of list) {
+               f() ; // it accesses  CEX = {  parent: f.Scope=BEC} -> GEC -> "i" in global scope, therefore, all functions access the same "i", and it is 5.
+           }
+
+           // F0.call(window);  CEX = { ..., parent: F0.Scope=BEC0} --> no "i" in BEC0, it accesses "i" in GEC = 5
+           // F1.call(window);  CEX = { ..., parent: F1.Scope=BEC1} --> no "i" in BEC1, it accesses "i" in GEC = 5
+           // F2.call(window);  CEX = { ..., parent: F2.Scope=BEC2} --> no "i" in BEC2, it accesses "i" in GEC = 5
+           // F3.call(window);  CEX = { ..., parent: F3.Scope=BEC3} --> no "i" in BEC3, it accesses "i" in GEC = 5
+           // F4.call(window);  CEX = { ..., parent: F4.Scope=BEC4} --> no "i" in BEC4, it accesses "i" in GEC = 5
+
+           // if we use "let i=0"
+           // F0.call(window; CEX = {..., parent: F0.Scope=BEC0} --> yes "i" in BEC0, i = 0
+           // F1.call(window; CEX = {..., parent: F1.Scope=BEC1} --> yes "i" in BEC0, i = 1
+           // F2.call(window; CEX = {..., parent: F2.Scope=BEC2} --> yes "i" in BEC0, i = 2
+           // F3.call(window; CEX = {..., parent: F3.Scope=BEC3} --> yes "i" in BEC0, i = 3
+           // F4.call(window; CEX = {..., parent: F4.Scope=BEC4} --> yes "i" in BEC0, i = 4
+
+           // 4. No hoisting for let and const variables.
+           console.log(val); // undefined
+           var val = 5 ;
+
+           // however,
+           //console.log(tmp); // throws exception
+           //let tmp = 5 ;  
+           
+                     
+            
+        </script>
+    </body>
+</html>

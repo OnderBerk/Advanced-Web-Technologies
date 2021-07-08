@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        
+      // Students() is a generator function (notice * before function name),
+      // it generates data, therefore generator function is known as "producer"
+      // Generator function is a different type of function,
+      // In each call, it executes part of its codes and returns a value.
+      // Calling a generator function is through iterator's next() method.
+      // It stops its execution after each yield statement, yield argument is the return value.
+      // Generator function remembers where it is left off in each invocation.
+      function *Students() {
+          console.log("Generator started");
+          yield "ahmet" ; // yield is like "return", it returns { value: "ahmet", done: false}
+          yield "ayşe" ;  // { value: "ayşe", done: false}
+          yield "mehmet" ; // { value: "mehmet", done: false}
+                           // { value: undefined, done: true}
+      }
+      
+      // Students is a generator function, and when you call it, it returns an iterable object called "generator"
+      // gen is "logically" an iterator for the generator function.
+      // gen implements iteratable interface, [Symbol.iterator], this is why we can use "gen" in 
+      // any way we use iterable objects such as for..of or spread operators
+      // check typeof gen[Symbol.iterator] === "function", it returns true.
+      var gen = Students();  // it does NOT mean "run Students() function", it just returns a generator object.
+      console.log(gen);
+
+
+      // This part is consumer, it consumes the data of producer.
+      // next() method of generator resumes function execution.
+
+      // next() executes up to the first yield output. "Generator started" and "ahmet"
+      console.log(gen.next()); // {value: "ahmet", done: false}
+      console.log(gen.next()); // {value: "ayşe", done: false}
+      console.log(gen.next()); // {value: "mehmet", done: false}
+      console.log(gen.next()); // {value: undefined, done: true}
+
+      // for..of statement automatically creates a new iterator by Students()
+      // and it calls iterator's next() method until iterator returns "done: true"
+      for ( let name of Students()) {
+          console.log(name);
+      }
+
+     // Spread operator also uses a new iterator on generator function with Students()   
+      console.log([...Students()]); 
+      console.log(Array.from(Students()));
+    </script>
+</body>
+</html>

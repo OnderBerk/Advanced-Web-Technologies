@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
+    </head>
+    <body>
+        <script>
+            var log = console.log ;
+            
+            var person1 = {
+                name : "Ali",
+                id : 123456,
+                debt: 0,
+                display : function() {
+                    console.log("Name is " + this.name) ;
+                }
+            } ;
+            
+            // All objects are inherited from "Object" class.
+
+            
+            // property check
+            // 1. check prop. (Not reliable - check both own and inherited props.)
+            person1.name ? log("1:Name exists") : log("1:Name not exists") ;
+
+            // since person1.debt is 0, it is taken as "false"
+            person1.debt ? log("1:Debt exists") : log("1:Debt not exists") ;
+            person1.toString ? log("1:toString exists") : log("1:toString not exists") ;
+           
+            
+            // 2. in operator (checks inherited props as well)
+            log( "name" in person1 ? "2:name exists" : "2:name not exists") ;
+            log( "debt" in person1 ? "2:debt exists" : "2:debt not exists" ) ;
+            log( "display" in person1 ? "2:display exists" : "2:display not exists") ;
+
+            // toString() is inherited property, there is no toNumber() methods
+            log( "toString" in person1 ? "2:toString exists" : "2:toString not exists") ;
+            log( "toNumber" in person1 ? "2:toNumber exists" : "2:toNumber not exists") ;
+            
+            // 3. hasOwnProperty() - checks only own props.
+            log( person1.hasOwnProperty("name") ? "3:name exists" : "3:name not exists") ;
+            log( person1.hasOwnProperty("debt") ? "3:debt exists" : "3:debt not exists") ;
+            log( person1.hasOwnProperty("display") ? "3:display exists" : "3:display not exists") ;
+            log( person1.hasOwnProperty("toString") ? "3:toString exists" : "3:toString not exists") ;
+            log( person1.hasOwnProperty("toNumber") ? "3:toNumber exists" : "3:toNumber not exists") ;
+            
+            // Iterate over "enumarable" properties both for own and inherited properties
+            for ( var prop in person1) {
+                log("Key : " + prop + " Value : " + person1[prop]) ;
+            }
+            
+            // Returns all enumerable only own properties
+            var allProps = Object.keys(person1) ;
+            log(allProps) ;
+            
+        </script>
+    </body>
+</html>

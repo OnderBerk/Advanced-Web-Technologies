@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     
+    // Generator can PULL and PUSH data to the collection. (This is different than iterator.)
+    // Generator is more than an iterator
+
+     function *generator(a) {
+         console.log(a);
+         let b = yield a;
+         let c = yield b ;
+         let d = yield c ;
+         return d;
+     }
+     // yield returns a value and generator function remembers that point. It quits from the function.
+     // when you call generator function with next() method, it remembers where it is left off
+     
+
+     var gen = generator(5);  // creates generator object but it does not call function.
+
+     // In the first next(), its parameter is ignored. gen.next(100) in the first call is the same with gen.next()
+     console.log(gen.next());   // { value:5, done:false}
+     console.log(gen.next(10)); // {value:10, done:false}, 10 is pushed to generator function in place of "yield a"
+     console.log("After the second next."); // execution contiues, it does not stuck in generator.
+     console.log(gen.next(20)); // {value:20, done:false}, 20 is pushed and it is replaced by "yield b"
+     console.log(gen.next(40)); // {value:40, done:false}
+     console.log(gen.next()); // {value:undefined, done:true}
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+body { font-family: arial; margin:0;}
+h1, p , h2, h3, h4, div, ul, li{ text-align: center;}
+td, th { text-align: center; border:1px solid #aaa; padding: 10px;}
+th a { color: #660; text-decoration: none;}
+table { margin: 20px auto; border-collapse: collapse;} 
+tr:nth-child(even) { background: #ccc;}
+
+.Name, .Lastname { width: 150px;}
+.CGPA { width: 80px;}
+
+/* Paging */
+#pageDiv { text-align: center;}
+#pageDiv span { margin: 10px; padding: 5px; }
+#pageDiv span a {color: #999; text-decoration: none;  }
+.active { font-weight: bold; 
+          border-bottom: 2px solid #999;
+          border-top: 2px solid #999;
+          background: #EED;
+}
+
+
+#info td { width: 125px;  padding: 10px; text-align: left; border: none;}
+#info tr:nth-child(even) { background: #ffddff;}
+#info td:nth-child(2) { font-weight: bold;}
+#transcript { margin-top: 60px; }
+#transcript td { padding: 6px; text-align: left;}
+#transcript tr:nth-child(even) { background: #eef;}
+
+#gpa td{ font-weight: bold; font-style: italic; text-align: left; background: #fcf;}
+
+.friends { margin-right: 20px; font-style:italic;}

@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // bind creates a special function object (bound function object) which wraps the orginal one.
+    // it adds new properties such as [[targetFunction]] -> orginal function
+    // [[BoundThis]] -> new this object, and [[BoundArgs]] -> bound arguments.
+   
+    var person = {
+        name: "ali",
+        display : function(title, dept) {
+            console.log(title + " " + this.name + " from " + dept);
+        }
+    };
+
+    person.display("Mr.", "CTIS"); 
+    // person.display.call(person, "Mr.", "CTIS")
+    // this = person, arguments = [ "Mr.", "CTIS"]
+
+    
+    var boundDisplay = person.display.bind({name: "mehmet"}, "Mr.");
+    /* boundDisplay = function object { 
+        [[BoundThis]] = {name: "mehmet"}
+        [[BoundArgs]] = ["Mr."]
+        [[TargetFunction]] : display
+    };
+    */
+    // when you call boundDisplay
+    boundDisplay("CTIS") ; // boundDisplay(window, "CTIS")
+    // boundDisplay.TargetFunction.apply(BoundThis, [ BoundArgs, "CTIS"]);
+    // as you can see, boundDisplay calls [[TargetFunction]] with [[BoundThis]], and [[BoundArgs]] with new 
+    // parameters "CTIS" in this case. It just appends "CTIS" to the boundArgs.
+    // and it becomes :
+    // display.apply({name: "mehmet"}, ["Mr.", "CTIS"]);
+    
+
+    // ⚠️ Another example (.bind(this) to explicitly set the functions "this" :
+            
+    var repeatName = {
+                name : "ctis478",
+                display : function() {
+                    // here "this" refers to repeatName object.
+                    // this.name returns "ctis478"
+                    setTimeout((function(){
+                        // "this" refers to global object in non-strict mode, null in strict mode
+                        // however, we can overwrite this default value by .bind()
+                        console.log("Name after 3 seconds : " + this.name ) ;
+                    }).bind(this), 3000) ;
+                }
+            };
+
+            
+    repeatName.display() ; 
+
+
+    </script>
+</body>
+</html>

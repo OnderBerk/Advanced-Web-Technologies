@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="jquery-2.1.1.js"></script>
+        <script type="text/javascript">
+
+        </script>
+        <style type="text/css">
+
+        </style>
+    </head>
+    <body>
+        <script>
+            function Rectangle( length, width ) {
+                this.length = length ;
+                this.width = width ;
+            }
+            
+            Rectangle.prototype.getArea = function() {
+                return this.width * this.length ;
+            } ;
+            
+            Rectangle.prototype.toString = function() {
+                return "[Rectangle " + this.length + " x " + this.width + "]" ;
+            } ;
+            
+            function Square(size) {
+                //this.length = size ;
+                //this.width = size ;
+                Rectangle.call(this, size, size) ; // call super.constructor, this = square instance.
+                // Rectangle(size, size); // Rectangle.call(window, size, size)
+            }
+            
+            // Relation between Square and Rectangle
+            Square.prototype.__proto__ = Rectangle.prototype;
+           // Square.prototype = Object.create(Rectangle.prototype) ; 
+           // Square.prototype.constructor = Square ;
+            
+            Square.prototype.toString = function() {
+                // To call a method from super.
+                // Rectangle.prototype.toString() does not work since this = Rectangle.prototype
+                // However, we want the current Square object to be "this"
+                var text = Rectangle.prototype.toString.call(this) ; // this.toString(); infinite loop 
+                return text.replace("Rectangle", "SQUARE") ;
+               // return "[Square " + this.length + " x " + this.width + "]" ;
+            } ;
+            
+            var rect = new Rectangle(5,10) ;
+            var sq = new Square(6) ;
+            
+            console.log(rect.getArea()) ;
+            console.log(sq.getArea()) ;
+            console.log(rect.toString()) ;
+            console.log(sq.toString()) ;
+            
+            // "instanceof" checks all prototype objects following prototype chain.
+            console.log(rect instanceof Rectangle) ;  // true
+            console.log(rect instanceof Object) ;   // true
+            console.log(rect.constructor === Object);  // false
+            
+            console.log(sq instanceof Rectangle) ;  // true
+            console.log(sq instanceof Square) ;  // true 
+            console.log(sq instanceof Object) ;  // true
+     
+        </script>
+    </body>
+</html>

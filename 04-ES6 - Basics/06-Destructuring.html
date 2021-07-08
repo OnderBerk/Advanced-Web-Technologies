@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+    // Destructuring: breaking down a data structure (object) in small parts.
+    let car = {
+        brand: "Audi A3",
+        year : 2018,
+        price : 150000 
+    } ;
+
+    // Use the same property name, var/let/const to declare variables.
+    // it must be initialized to an appropriate object.
+    let { brand, price, color = "white"} = car ; // take some part of the object,
+
+    car.brand = "Audi A4" ;
+    car.price = 165000 ;
+    console.log(brand); 
+    console.log(color); 
+
+    // {price, brand} = car ; // syntax error
+    // Use parenthesis, otherwise, JS Engine confuses with block scope. 
+    ({price, brand} = car ) ;
+
+    // Arbitrary local variable names, brand -> marka, 
+    let { brand: marka, color: renk = "red"} = car ;
+    console.log(marka);
+    console.log(renk);
+
+    let car2 = {
+        brand: "Ford",
+        mechanic: {
+              engine : {
+                    volume : 1600,
+                    fuel: "diesel"
+                } ,
+             transmission: {}
+        }
+    };
+
+    // nested
+    let { mechanic:{engine}} = car2 ;
+    console.log(engine.volume);
+
+    // Array Destructuring
+    let colors = ["red", "green", "blue"] ;
+
+    // declare variables first and last.
+    let [first, , last] = colors ;
+    console.log(`First : ${first} and Last : ${last}`);
+    colors[0] = "black" ;
+    colors[2] = "white" ;
+
+    // first and last were already created, use the following syntax
+    [first, , last] = colors ;
+    console.log(`First : ${first} and Last : ${last}`);
+
+    // Swapping.
+    let a = 5, b = 7 , c = 2;
+    [a, b] = [b, a] ;
+    console.log(`a : ${a} and b : ${b}`); // a:7 and b:5
+    
+    a = 1, b = 2, c = 3 ;
+    [a,b,c] = [c,a,b] ;
+    console.log(`a : ${a} and b : ${b} and c : ${c}`); // a:3, b:1, c:2
+
+    // nested array destructuring
+    colors = ["red", ["green", "blue"]];
+    [first,[, last]] = colors ;
+    console.log(`First : ${first} and Last : ${last}`);
+
+    // Rest
+    let args = [this, 1,2,3,4] ;
+    // if you want to extract all the values after "this"
+    let [, ...rest] = args ;
+    console.log(rest); // rest : [1,2,3,4]
+
+    // Cloning an array
+    // in ES5, var newColor = colors.concat(); or colors.slice();
+    let [...newColor] = colors ;
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    class LinkedList {
+        constructor() {
+            this.head = null;
+            this.tail = null;
+            this.count = 0;
+        }
+
+        add(val) {
+            var newNode = { value: val, next:null } ;
+            this.count++;
+            if ( this.tail === null ) {
+                this.head = this.tail = newNode ;
+            } else {
+                this.tail.next = newNode ;
+                this.tail = newNode;
+            }
+        }
+
+        toString() {
+            var result = "Length : (" + this.count + ") :  "  ;
+            var curr = this.head ;
+            while ( curr !== null) {
+                result += curr.value + "  " ;
+                curr = curr.next;
+            }
+            return result;
+        }
+        /*  with standard way.
+        [Symbol.iterator]() {
+            let current = this.head;
+            return {
+            next : function() {
+                if ( current !== null) {
+                    let res = { done: false, value:current.value} ;
+                    current = current.next;
+                    return res;
+                } 
+                return {done:true} ;
+            }
+            };           
+        }
+        */
+
+        [Symbol.iterator]() {
+            return this.getIterator() ;
+        }
+        // Turn linked-list into an iterable object using generator function.
+        *getIterator() {
+            console.log("generator started");
+            var curr = this.head;
+            while( curr !== null) {
+                yield curr.value;
+                curr = curr.next;
+            }
+        }
+    }
+
+
+    var list = new LinkedList() ;
+    list.add(5) ;
+    list.add(24) ;
+    list.add(3) ;
+    list.add(75) ;
+    list.add(-3);
+    console.log(list +  "" );
+    
+    const iterator = list.getIterator();
+    console.dir(iterator);
+
+    console.log(iterator.next());
+    console.log(iterator.next());
+    console.log(iterator.next());
+    console.log(iterator.next());
+    console.log(iterator.next());
+    console.log(iterator.next());
+
+
+    // behind the scene
+    // var iterator = list[Symbol.iterator]() and it calls getIterator() that returns a generator object.
+    for ( let item of list) {
+        // var {done, item} = iterator.next() ;
+        // if done == true, it quits the loop
+        console.log(item);
+    }
+
+    console.log([...list]); // spread operator to convert from iterable to an array
+    const squares = [...list].map((x) => x*x).join(", ");
+    console.log(squares); 
+
+
+    </script>
+</body>
+</html>

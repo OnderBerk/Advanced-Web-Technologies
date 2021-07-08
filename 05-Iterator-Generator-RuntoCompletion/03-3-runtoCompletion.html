@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            function f1() {
+                alert("hello from f1") ;
+              
+            }
+            function f2() {
+                alert("hello from f2") ;
+            }
+            
+            let fn = f1 ;
+            setTimeout(function() { fn();}, 2000) ;
+            
+            
+            // wait for between 1.5s and 2.5s randomly
+            let duration = Math.random() < 0.5 ? 1500 : 2500 ;
+            let end = Date.now() + duration  ; 
+            console.log(`Duration is ${duration}`);
+            while ( Date.now() < end ) ;  
+            
+            // this statement runs between 1.5s and 2.5s
+            fn = f2 ;
+            
+            
+        </script>
+    </body>
+</html>

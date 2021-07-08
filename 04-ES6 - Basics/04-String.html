@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script> 
+    // Unicode improvement: ES6 supports surrogate pairs (UTF-16)
+    // New method codePointAt()
+    // With 16-bit 65536 symbols can be represented. However, Unicode have
+    // about 140.000 symbols. 16-bit is not enough, for the symbol code points
+    // greater than 65536 or 16-bit, they are represented by 2 16-bit numbers or code 
+    // units. Code Points between 0 and 65535 are in Basic Multilingual Plane(BMP)
+    // This is called the first 16-bit plane. Other planes are support planes.
+    // Support planes are represented by two code units (16-bit) or 32-bit.
+    let text = "🚀S" ;
+    console.log(text.length); // returns 3 which is number of code units.
+    console.log([...text].length); // returns 2
+
+    // in Unicode: Code points : d800-dbff allocated for high surrogate
+    //                           dc00 - dfff allocated for low surrogate
+    console.log(text.charCodeAt(0).toString(16)); // d83d (high surrogate)
+    console.log(text.charCodeAt(1).toString(16)); // de80 (low surrogate)
+
+    console.log(text.codePointAt(0).toString(16)); // code point for rocket: 1f680 (d83d de80 --(utf-16 decode) --> U+1f680 )
+    // check if a character has surrogate pair (another 16-bit)
+    console.log(text.codePointAt(0) > 0xFFFF ? "from support plane" : "BMP") ; // 🚀 - from support plane
+    console.log(text.codePointAt(2) > 0xFFFF ? "from support plane" : "BMP") ; //S    - BMP
+
+    // code point to string
+    console.log(String.fromCodePoint(0x1f923)); // smiley 🤣
+
+    // Unicode regular expression: "u" flag for codepoints.
+    let text2 = "A 🚀 rocket symbol 🚀 here" ;
+    console.log( text2.match(/\u{1f680}/gu)); // returns an array matching all instances.
+    console.log( text2.search(/\u{1f680}/u)); // returns the index of the first occurence of the pattern : 2
+    console.log( text2.search(/\u{1f68e}/u)); // not found, -1
+
+    // To access all matches.
+    let result;
+    let re = /\u{1f680}/gu ;
+    while(result = re.exec(text2)) console.log(result); // index:2 and index:19
+
+    // Template Literals (backtick): multi line string
+    let out = `
+    <div>
+        <h1>Introduction to Template String</h1>
+        <p>Rocket 🚀 icon ... </p>
+    </div>
+    `;
+
+    console.log(out);
+
+    // Template Literal : substitution
+    let age = 20 , name = "Ali" ;
+    let message = `${name} is ${age} years old` ; // instead of message = name + " is " + age + " years old"
+    console.log(message);
+
+    // Template Literal : expression
+    let side = 6 ;
+    console.log(`Area of square with side ${side} is ${side * side}`);
+
+    </script>
+</body>
+</html>

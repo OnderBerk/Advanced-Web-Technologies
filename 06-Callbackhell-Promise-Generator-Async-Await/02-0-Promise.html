@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery-3.1.1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // Promise is an object that serves as a placeholder for a value.
+    // That value is usually the result of an async operation such as HTTP request, reading file, timer, animate
+    // When async function is called it can immediately return a promise object.
+    // Using that object, you can register callbacks that will run when the operation succeeds or an error
+    // occurs.
+
+    // resolver function (function in Promise constructor) executes immediately (synchronously)
+    function asyncTask() {
+        return new Promise((resolve, reject) => {
+          // starts an async function "setTimeout", it prepares its data and when 
+          // the data is ready, the callback registered in "then()" will be invoked.
+          $("body").append("<p>Resolver Function started.</p>");
+          setTimeout(()=> {
+            //resolve(10); // returns a primitive or an object or nothing, it implicitly calls the callback for "fulfillment" or "then"
+            reject(-1);  // puts a callback for "reject" or "catch"
+          }, 3000) ;
+        });
+    }
+
+    // asyncTask PROMISES that it will return a result sooner or later.
+    // promise object is in "pending/waiting" state.
+    let p = asyncTask();  
+
+    // register a callback that will be invoked when the promise is resolved or rejected.
+    p.then( (value) => {
+        $("body").append("<p>Promise 'p' is fulfilled by 'resolve()' value : " + value + "</p>");
+    })
+    .catch((error) => {
+        $("body").append("<p>Promise 'p' is fulfilled by 'reject()' error : " + error + "</p>");
+    });
+   
+    $("body").append("<p>Last Statement in primary application</p>");
+    
+
+
+    
+    </script>
+</body>
+</html>

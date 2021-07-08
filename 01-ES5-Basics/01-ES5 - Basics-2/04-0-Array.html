@@ -1,0 +1,110 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+      // Array
+      var colors = [] ; // empty array new Array()
+      var std = new Array(10); // allocates 10 undefined items.
+      std.fill(0); // fill with 0 
+      var arr = [1, 3] ;
+      console.log(arr.length);
+      // PRINT
+      console.log(arr.join(", ")) ;
+
+      // ADD
+      arr.push(6, 9) ; // to the end
+      console.log(arr);
+      arr.unshift(0) ; // to the beginning
+      console.log(arr);
+      arr.splice(2,0,2, 2.5); // insert
+      console.log(arr);
+
+      // DELETE
+      var last = arr.pop(); // last -> 9
+      console.log(arr);
+      console.log(last);
+
+      var first = arr.shift() ;
+      console.log(arr);
+      console.log(first);
+
+      var item = arr.splice(2,1) ;
+      console.log(arr);
+      console.log(item);
+
+      // ITERATION
+      // 1. For loop
+      var str = "" ;
+      for ( var i=0; i<arr.length; i++) {
+        str += arr[i] + " " ;
+      }
+      console.log(str);
+
+      // 2. Callback methods.
+      var sum = 0 ;
+      arr.forEach(function(val){
+        sum += val;
+      });
+      console.log("Sum: " + sum);
+
+      // 3. Mapping
+      var oneMore = arr.map(function(val) { return 2*val + 1; }) ;
+      console.log(oneMore);
+
+    // 4. Filter
+    var filtered = arr.filter(function(val) { return val % 2}) ;
+    console.log(filtered);  
+
+    // 5. Reduce
+    var product = arr.reduce(function(acc,val) {return acc*val}, 1) ;
+    var total = arr.reduce(function(acc,val) {return acc+val}, 0) ;
+    console.log("Total : " + total + " Product : " + product);
+
+    // Function Composition
+    var grades = new Array(20).fill(0);
+    grades.forEach(function(val,idx,arr){ arr[idx] = Math.floor(Math.random()*101);});
+    console.log(grades);
+    var passAverage = grades.filter(function(val){ return val > 50})
+                            .reduce(function(acc,val,idx,arr){ return acc + val/arr.length}, 0) ;
+    console.log(passAverage);
+    
+    // CLONE
+    var cloneArray = arr.slice(); // shallow copy
+    console.log(cloneArray);
+
+    // SORTING
+    arr.push(1000);
+    arr.sort();
+    console.log(arr); // sort problem
+    arr.sort(function(a,b) { return a-b;});  // b-a for reverse sorting
+    console.log(arr); // sorting solved
+    
+    var students = [
+      { name: "ali", id:1, dept:"ctis"},
+      { name: "veli", id:3, dept:"ee"},
+      { name: "zeynep", id:2, dept:"arch"}
+    ];
+
+    students.sort(function(a,b){ return a.id - b.id;});
+    students.sort(function(a,b){ return a.name.localeCompare(b.name);}).reverse();
+    console.log(students);
+
+    // SEARCHING
+    arr.indexOf(2)!== -1 ? console.log("2 is in the array") : console.log("2 is not in the array");
+
+    var std = students.find(function(val) { return val.name === "ali";});
+    console.log(std);
+
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <script>
+            "use strict" ; // to enable strict mode (at the top of script or function)
+            /*  
+             * Variables : Primitive, References
+             * Primitive: Number, String, Boolean, null, undefined
+             * References : Array, Function, Date, RegExp, Custom Objects
+             */ 
+            
+            // Primitive Types : they have their own storage, if unicode is greater than 2 bytes use \u{unicodeCodePoint}
+            var text = "In Math : \" Pi (\u03a0) is 3.1415\" and ...  \u{1F60A}" ;  // double or single quotes \ for escape
+            var num = 0.3 - 0.1; // Stored as 64 bit double precision float (IEEE 754 standard), be carefull about rounding error. (num == 0.2 returns false)
+            var flag = true ; // false
+            var head = null ; 
+            var age ;  // undefined.
+        
+            age = num ;  // primitive type value (num) is copied. 
+            age++ ;
+            // what happens to num?  it does not change, since "=" means copying from one memory location to other.
+            
+            // Reference Types
+            var colors = ["red", "green", "blue"] ; // new Array("red", "green", "blue")
+            var now = new Date();
+            var pattern =  /\b\d+\b/g;  // new RegExp('\\b\\d+\\b', 'g'); 
+                       
+            console.log( "Coordinates:123, 345 for C45 area".match(pattern)) ; // string primitive is conveted to String object implicitly 
+            
+            // Assignment of Reference Types
+            var newColor = colors ; 
+            colors[0] = "black" ;
+            console.log(newColor) ;  // newColor and colors are referencing to the same object.
+            
+            // Operators: arithmetic, logical, relational
+            // Arithmetic Operators : +, -, *, / , %, ++, --, +=, -=, *=, %=, /=, **
+            // JS converts types automatically (type coersion)
+            34 + "45" ; // 3445  concatanation  34 => "34"
+            34 * "2" ; // 68  "2" => 2, type coersion
+            34 + true ; // 35
+            35 + [] ; // [] => "", "35"
+            
+            typeof text ; // "string"
+            typeof num ; // "number"
+            typeof flag ; // "boolean"
+            typeof head; // "object" ??!! head === null
+            typeof notcreatedyet ; // "undefined"
+            typeof colors ; // "object" use Array.isArray(colors), "colors instanceof Array"
+            typeof pattern ; // "object", "pattern instanceof RegExp"
+            typeof now ; // "object", "now instanceof Date"
+            
+            // ⚠️Convert, Number, String, Boolean are called wrapper objects.
+            Number("123") ; // string to number
+            Number("") ; // 0
+            Number("34px") ; // NaN
+            parseInt("34px") ; // string to number -> 34
+            parseInt("px34"); // NaN
+            parseInt(13.5); // float to integer
+            parseFloat("34.25px") ; // string to number
+            parseFloat("") ; // NaN
+            String(123) ; // number to string, or 123 + ""
+            Boolean(1) ; // Falsy: false, 0, "", null, undefined, NaN  Truty: others.
+
+            // Check a type  such as "", "  ", null, false, "12.5", 13.45, -12e3
+            var n = "-12e3";
+            // isNaN(expr) : it converts expr to Number, then it tests if it is Not-a-Number
+            // isNaN(12) -> false, isNaN("12") -> false, isNaN("hello") -> true
+            console.log(!isNaN(n) && parseFloat(n) ? "number" : "not a number" );   // what about "" ?
+            
+            
+            // Relational operators : >, >=, <, <= , ==, != , ===, !===
+            1 == "001" ; // true, "001" => 1
+            1 == [1] ; // true, since Array.valueOf() returns 1
+            1 == true ; // true true => 1
+            "1" > "0001" ; // true, string comparison
+            null == undefined ; // true
+            // Therefore, avoid type coersion (implicit type conversion), make sure both operand have the same type
+            // Use strict equality ===
+            1 === "001" ; // false , because they are not in the same type in the first place. No type coersion.
+            
+            // Logical Operators: !, &&, ||
+            var height = window.height || 0 ; // if height is truty, it returns it, otherwise, it returns 0, default value.
+            age > 1 && console.log("age is greater than 1") ; // it executes from left to right, in the first false, it returns, or the last one.
+            var width = window && window.width ; // if window is available, then use its width property.
+
+            // if, switch, for and while loops together with continue and break exactly same with C, Java, PHP
+            
+            
+            
+            
+        </script>
+    </body>
+</html>

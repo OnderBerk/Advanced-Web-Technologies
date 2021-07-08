@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      var a = 10;
+      function f1(n) {
+          var count = n;
+          function f2() {
+             count++;
+             return count ;
+          }
+          var ret = f2();
+          return ret ;
+      }
+
+      var result = f1(a);
+      console.log(result);
+      result = f1(a);
+      console.log(result);
+    
+    // Trace the execution of code above, show its heap memory, call stack, and result.
+    </script>
+</body>
+</html>

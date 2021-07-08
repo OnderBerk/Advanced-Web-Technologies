@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+    function *counter(increment = 1) {
+        let count = 0 ;
+        while (true) {
+            increment = (3) || increment ;
+            count += increment ;
+        }
+    }
+
+    let evenIterator = counter(2) ; // it returns generator, don't run counter()
+    console.log(evenIterator.next().value); // { value:0, done:false}
+    console.log(evenIterator.next().value); //  { value:2, done:false}
+    console.log(evenIterator.next().value); //  { value:4, done:false}
+
+    let misc = counter() ;
+    console.log(misc.next().value);  //  0
+    console.log(misc.next().value);  //  1
+    console.log(misc.next(3).value); //  { value: 4, done:false}
+    console.log(misc.next().value);  //  {5}
+
+    let another = counter() ;
+    console.log(another.next(5).value); // 
+    console.log(another.next().value);  //
+    console.log(another.next().value);  //
+
+    
+    
+    </script>
+</body>
+</html>

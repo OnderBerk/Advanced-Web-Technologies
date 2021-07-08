@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+    </head>
+    <body>
+        <script>
+            // Async. JavaScript:
+            // Primary Application (user js codes) run in a single thread from the user point of view.
+            // Using some API commands, we can create async tasks such as http request, timers
+            // Important terms : Callbacks, Run to completion, event loop, event queue.
+
+            let start = Date.now() ;
+            setTimeout( () => { console.log("Duration : " + (Date.now() - start));}, 1000) ; // adds a callback to the queue
+            console.log("started") ;
+
+            // wait for 4 seconds
+            let end = Date.now() + 4000 ;
+            while ( Date.now() < end) ; 
+           
+            console.log("finished") ;
+            
+            // _EventLoop(); // infinite loop that takes one callback from callback/event queue
+
+            // JS programs run in a single thread.
+            // However, Built-in JS API can run in a separate thread, for example, setTimeout
+            // It creates a new thread and when the time is out, it puts callback function to the callback queue
+            
+            // What about the following example ?
+
+            // console.log("started");
+            // setTimeout(() => { console.log("hello");}, 0) ;
+            // console.log("finished");
+
+
+
+
+        </script>
+    
+    </body>
+</html>

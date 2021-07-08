@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var a = 10 ;
+    function f1(n) {
+        var count = n ;
+        function f2() {
+            count++;
+            return count  ;
+        }
+        return f2 ;
+    }
+
+    // result is a closure, a function that remembers the state when it was created, and can access those states.
+    var result = f1(a); 
+    console.log(result());
+    console.log(result());
+    console.log(result());
+
+    var another = f1(100);
+    console.log(another());
+    console.log(another());
+    console.log(another());
+
+
+    
+    </script>
+</body>
+</html>

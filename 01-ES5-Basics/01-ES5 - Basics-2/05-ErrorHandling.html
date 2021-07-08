@@ -1,0 +1,44 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+    function add(n1, n2) {
+      if (isNaN(Number(n1)) || isNaN(Number(n2))) {
+        throw new Error('Arguments are not number');
+      }
+      return n1 + n2;
+    }
+
+    try {
+      var sum = add(1, '5');
+      console.log('Addition is ' + sum);
+    } catch (e) {
+      console.log(e.message);
+    }
+
+   // console.log throws an exception since b is not defined.
+   display() ;
+
+
+    function display() {
+      try {
+        console.log(b) ; // throws exception
+      } catch(e) {
+        console.log(e.message) ;
+        return ;
+      } finally {
+        console.log("Executes before 'return' in any way");
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      var age = 5; /* variable declaration */
+      display(age);
+      console.log(maxAge);
+      console.log(minAge); // Exception: Reference Error, minAge is not defined.
+      show(age); // Exception: show is not function
+
+      function display(n) { console.log(n);}    /* function declaration */
+      var show = function(n) { console.log(n);} /* function expression */
+      var maxAge = 100; /* variable declaration */
+
+
+    // Hoisting: moving variable and function declarations (not expression) to top.
+    // JS Engine scans the source code before run, and finds out the variables and function declarations (not expression!).
+    // and turns the code above as below.
+    /*
+    // Scope Variables
+    var age;
+    function display(n) { console.log(n); }
+    var show;
+    var maxAge;
+
+    // Code Starts
+    age = 5;
+    display(age); // 5
+    console.log(maxAge); // undefined
+    console.log(minAge);  // throws Exception and execution stops
+    show(age); // Exception, show is undefined now.
+    show = function(n) { console.log(n);}
+    maxAge = 100;
+    */
+
+
+    </script>
+</body>
+</html>

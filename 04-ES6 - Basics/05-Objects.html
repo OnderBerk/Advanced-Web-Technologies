@@ -1,0 +1,100 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let name = "ali", id = 1234 ;
+
+    // Shorthand for adding property
+    let person1 = { name, id } ;
+    // let person = { name: name, id : id} ;
+    console.log(person1);
+
+    // Concise Method : can use "super" for parent object,
+    // display method does not have prototype property, and cannot be used by "new" operator.
+    let person2 = {
+        name : "ali",
+        display(title) {
+            return `${title} ${this.name}` ;
+        }
+    };
+    // display: function(title) { ... }
+    console.log(person2.display("Dr."));
+
+   // prototype setting
+   // instead of __proto__, 
+   // use Object.setPrototypeOf(obj, proto) method.
+   // to get Object.getPrototypeOf(object) ;
+
+   // person1.__proto__ = { ... }
+   let proto = Object.getPrototypeOf(person1) ;
+   //proto.display = function() { console.log(this.name);} ;
+
+   Object.setPrototypeOf(person1, {
+        display() {
+            console.log(this.name);
+        }
+   } ) ;
+   person1.display();
+
+   // Class
+   class Rectangle {
+
+       // function Rectangle(length, width) {...}
+       constructor(length,width) {
+           this.width = width ;  // instance properties
+           this.length = length ;
+       }
+
+       // Rectangle.prototype.getArea = function() {...}
+       getArea() {
+           return this.width * this.length ;
+       }
+
+       // Rectangle.prototype.toString = function() {...}
+       toString() {
+        return "[Rectangle " + this.length + " x " + this.width + "]" ;
+       }
+
+       // Rectangle.random = function() { ... }
+       static random() {
+           let w = Math.floor(Math.random() * 20) + 1 ;
+           let l = Math.floor(Math.random() * 20) + 1 ;
+           return new Rectangle(l,w);
+       }
+   }
+
+   let rect = new Rectangle(6,8) ;
+   console.log(rect.getArea());
+   console.log(rect + ""); // force to call toString() in a different way, instead of rect.toString() explicitly.
+
+   console.log(rect instanceof Rectangle);  // true
+   console.log(rect instanceof Object);  // true
+
+    console.log(Rectangle.random() + "");
+
+
+   // Inheritance, no multiple inheritance.
+   // concise methods have "super" reference in its execution context.
+    class Square extends Rectangle {
+        constructor(length) {
+            super(length, length) ;
+            // Rectangle.call(this, length, length) ;
+        }
+        // override method.
+        toString() {
+            let str = super.toString();
+            // var str = Rectangle.prototype.toString.call(this) ;
+            return str.replace("Rectangle", "SQUARE") ;
+        }
+    }
+
+    let sqr = new Square(10) ;
+    console.log(sqr.toString());
+    </script>
+</body>
+</html>

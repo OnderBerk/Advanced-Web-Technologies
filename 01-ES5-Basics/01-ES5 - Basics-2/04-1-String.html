@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     // STRING : immutable object
+     var name = "   İlayda   " ;
+     name = name.trim();
+     console.log("length: " + name.length + " (" + name + ")");
+    
+    console.log("First Char: " + name[0] + " Char Code: " + name.charCodeAt(0));
+    console.log("TL : " + String.fromCharCode(0x20BA)); // from UTF-16 to Character
+
+    // Search
+    var str = "This is an apple" ;
+    console.log(str.indexOf("an")); // 8
+
+    var text = "My ticket is TC-234, TC-453 for the flight" ;
+    console.log(text.search(/\btc-\d+\b/i));
+    var res = text.match(/\btc-\d+\b/gi) ;
+    console.log(res);
+
+    // Replace
+    var fullName = "Celal Akkuzu" ;
+    var short = fullName.replace(/(\w)\w+\s+(\w+)/, "$2, $1.");
+    console.log(short);
+
+    // delete many spaces in between.
+    var text2 = "  This  contains   many   spaces   " ;
+    text2 = text2.replace(/\s+/g, " ").trim();
+    console.log(text2);
+
+
+    // Compare
+    console.log("Ankara".localeCompare("Eskişehir")); // -1: less, 0: equal, 1: greater
+
+    // Extract a part of the string
+    var fruit = str.substr(11);
+    console.log(fruit);
+
+    
+    
+    
+    </script>
+</body>
+</html>

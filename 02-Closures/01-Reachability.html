@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      // All objects are created in heap memory.
+      var person = { name: "ali", id:123} ;
+      person = null;
+      // what happens to the object?
+      // this object is not reachable any more, this is why it is deleted from heap memory by Garbage Collector
+
+      var animal = { type: "dog"} ;
+      var dog = animal ;
+      animal = null;
+      // the object is still accessible from dog, it is not deleted. Object is reachable. GC does not delete.
+
+      var car = {
+          brand: "opel",
+          tire: { R: 16, W: 225  }
+      } ;
+
+      var t = car.tire; // car.brand; ??
+      car = null;
+      console.log(t);
+      // in memory, there are two objects, car and tire. car is deleted. Part of the car which is tire still lives.
+
+      var teacher = { name: "ali", 
+                course: {
+                    code : "CTIS478"
+                },
+                dept: {
+                    name: "CTIS", university: "Bilkent"
+                }  
+      } ;
+    teacher = null;
+    // there are 3 objects in heap memory; teacher, course and dept.
+    // although course and depth have been referenced, they are not reachable. All objects are deleted.
+
+   // RESULT: Garbage Collector (GC) deletes the objects that are not REACHABLE. (it does not matter if the object
+   // referenced or not)
+
+    </script>
+</body>
+</html>

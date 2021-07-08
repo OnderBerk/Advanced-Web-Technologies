@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.1.1.js"></script>
+</head>
+<body>
+    <div id="t1">Text 1</div>
+    <script>
+     // Very simplified version of Promise class.
+     // Just to give you an idea how Promise works behind the scene.
+
+     class SPromise {
+         constructor(fn) {
+             this.result = undefined ;
+             this.state = "pending" ; // fulfilled = resolve, rejected, pending
+             this.success = null ; // callback in then()
+             this.next = null ; // SPromiseise Chain
+             if (fn)  fn(this.resolve.bind(this), null) ;
+         }
+
+         resolve(val) {
+            if ( this.state === "pending") {
+                this.state = "fullfilled" ;
+                this.result = val ;
+            }
+            
+            if ( this.success) {
+                let cb_result = this.success(this.result) ;
+                if ( cb_result instanceof SPromise) {
+                    cb_result.success = this.next.success ;
+                    cb_result.next = this.next.next ;
+                    this.next = cb_result ;
+                } else  {
+                    setTimeout(() => { this.next.resolve(cb_result)}, 0) ;
+                }
+                
+            }
+         }
+
+         then(callback) {
+             this.success = callback ; // register success callback
+             let next = new SPromise() ;
+             this.next = next ;
+             if (this.state != "pending") this.resolve() ;
+             return next ;
+         }
+
+     }
+
+    // APPLICATION of SPromise
+    console.log("User Code Starts");
+     let sum = 0 ;
+     let p1 = new SPromise((resolve, reject) => {
+         console.log("T1 started, wait 2 seconds");
+         // TASK- async T1 started 
+         setTimeout( () => {
+              let rnd = Math.floor(Math.random() * 100) ;
+              resolve(rnd) ;  // p1.resolve
+              console.log("T1 ends");
+              }, 2000) ;
+     })
+     .then(val => {
+         console.log("T1's success handler starts with value " + val);
+         sum += val ;
+         // TASK - async T2 started 
+         return new SPromise((resolve, reject) => {
+              console.log("T2 started, wait 3 seconds");
+               setTimeout(() => {
+                 let rnd = Math.floor(Math.random() * 100) ;
+                 resolve(rnd);
+                 console.log("T2 ends ");
+               }, 3000) ;
+         });
+     })
+     .then( val=> {
+         console.log("T2's success handler starts with value " + val);
+         console.log("T3 started, no wait");
+         sum += val ;
+         let rnd = Math.floor(Math.random() * 100) ;
+         return rnd ;
+     })
+     .then( val => {
+        console.log("T3's success handler starts with value " + val);
+        sum += val ;
+        console.log(`Sum is ${sum} and Average is ${sum/3}` );
+     }) ;
+       
+     console.log("User Code Ends");
+    </script>
+</body>
+</html>

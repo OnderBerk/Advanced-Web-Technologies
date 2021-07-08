@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="jquery-2.1.1.js"></script>
+        <script type="text/javascript">
+
+        </script>
+        <style type="text/css">
+
+        </style>
+    </head>
+    <body>
+        <script>
+		    // INFORMATION HIDING
+		 
+            // Module Pattern, used in jQuery, IIFE (Immediatelly Invoked Function Expression)
+            var api = (function(){
+                 var state = 1 ; // private properties accesible by the object returned
+                 // next() and getState() are closures.
+                 return {
+                     version : "Api version 1.1",
+                     next : function() {
+                         state++;
+                     } ,
+                     getState : function() {
+                         return state ;
+                     }
+                 } ;
+            }()) ;
+
+
+
+
+            api.next() ;
+            api.next() ;
+            console.log(api.getState()) ;
+            console.log(api.version) ;
+            
+            
+            // Private Instance Property (private property)
+            // Shortcomings:  getAge and grow are part of the objects.
+            // This is the only way to make private instance property
+            function Person(name, p_age) {
+                var age = p_age ; // private instance property
+                this.name = name ;
+                
+                // closures
+                this.getAge = function() {
+                    return age ;
+                } ;
+                
+                this.grow = function() {
+                    age++;
+                } ; 
+               
+            }
+            
+            
+            var p1 = new Person("ali", 19) ; // similar to module pattern
+            p1.grow();
+            console.log(p1.getAge());
+            
+			
+			var p2 = new Person("veli", 15) ; 
+            p2.grow();
+            console.log(p2.getAge());
+            
+            
+            // Private Member Property (private static)
+            // Hybrid method with constructor and module pattern
+             
+            var Animal = (function(){
+                // shared by all instances.
+                var counter = 0 ; // private static class property
+                
+                function _Animal(species, price) {
+                    this.species = species ; // public instance property
+					counter++;
+					
+					// "price" is private instance property
+					this.getPrice = function() {
+					   return price ;  
+					}
+                }
+                // getter for "counter"
+                _Animal.prototype.getCounter = function() {
+                    return counter ;
+                } ;
+                 
+				 // public static class property
+				_Animal.version = "Animal version 1.2" ;
+                return _Animal ;              
+            }()) ;
+            
+            var a1 = new Animal("Cat", 700) ;
+            var a2 = new Animal("Dog", 1050) ;
+            console.log("a1 is a " + a1.species) ; // CAt
+            console.log("a2 is a " + a2.species) ;  // Dog
+            console.log("Number of animals is "  + a1.getCounter()) ; // a1.counter not working!
+            
+			console.log( "Price of " + a1.species + " is " + a1.getPrice() ) ; 
+			
+        </script>
+
+    </body>
+</html>

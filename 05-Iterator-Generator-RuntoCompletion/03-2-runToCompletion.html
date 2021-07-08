@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            // explains run to completion.
+            // if callback has a heavy processing, it kills the interactivity.
+            // Therefore, callback must do its task very quickly.
+            window.addEventListener("click", function() {
+                // this code cannot be interrupted by other callbacks. (run to completion)
+                let now = Date.now() + 3000 ;
+                while ( Date.now() < now ) ; // waits 3 seconds
+                console.log("click ends") ;
+            });
+            
+            setInterval(function(){
+                counter.innerHTML++;
+            }, 100) ;
+        </script>
+        <div id="counter">0</div>    
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+	/* Question : For the following code segment, trace the current objects (function objects), execution 
+	   Contexts, and runtime call stack */
+    var fn ;
+    function calc(start) {
+        var c = start || 0 ;
+        fn = function() {
+            var s = 2*c + 1;
+            return s;
+        }
+    }
+
+    calc();
+    var s = fn();
+    console.log(s)
+    calc(2);
+    s = fn();
+    console.log(s)
+    
+    </script>
+</body>
+</html>

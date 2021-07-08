@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // Even duration may be a random value
+    function Task( duration) {
+        return new Promise( (resolve, reject) => {
+            let val = Math.floor(Math.random() * 21) ;
+            setTimeout( () => {
+                console.log(val);
+                resolve(val);
+            }, duration) ;
+        });
+    }
+
+    // Version 1
+   /* let total1 = 0 ;
+    let start = Date.now();
+    Task(1000).then(res => { total1 += res}) ;
+    Task(2000).then(res => { total1 += res}) ; 
+    // Task(3000).then(res => { total1 += res}) ; 
+    // console.log(`total : ${total1} and elapsed : ${Date.now() - start} `);
+
+    
+    // Since I know the durations, I can get "total" in Task(3000) which is the last executing one.
+      Task(3000).then(res => { 
+          total1 += res;
+          console.log(`total : ${total1} and elapsed : ${Date.now() - start} `);
+      }) ; 
+    */
+    
+
+/* what if we don't know duration of tasks */
+  /*
+    // Inefficient Solution, it serializes INDEPENDENT async tasks 
+    let total2 = 0 ;
+    let start2 = Date.now();
+    Task(1000)
+    .then((res) => {
+       total2 += res ;
+       return Task(2000) ;
+    })
+    .then((res) => {
+       total2 += res ;
+       return Task(3000) ;
+    })
+    .then((res) => {
+        total2 += res ;
+        console.log(`total : ${total2} and elapsed : ${Date.now() - start2} `);
+    }) ;
+    */
+   
+   
+   /*
+    // Solution with Promise
+    let start = Date.now();
+    Promise.all([Task(1000), Task(2000), Task(3000)])
+    .then(res => {
+        console.log(res); // returns an array
+        let total = res.reduce((prev, curr) => prev + curr, 0) ;
+        console.log(`total : ${total} and elapsed : ${Date.now() - start} `);
+    }); 
+    */
+
+
+    // Solution with Async/await
+    let start = Date.now();
+    (async function Sum() {
+        // results is an array that stores result of three tasks.
+        let results = await Promise.all([Task(1000), Task(2000), Task(3000)]) ;
+        let total = results.reduce((prev, curr) => prev + curr, 0) ;
+        console.log(`total : ${total} and elapsed : ${Date.now() - start} `);
+    })() ;
+
+
+    
+    
+    </script>
+</body>
+</html>

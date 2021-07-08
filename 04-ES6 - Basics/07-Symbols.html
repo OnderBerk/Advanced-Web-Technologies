@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p id="test">Test Object</p>
+    <script>
+    // Types: 
+    // primitive: number, string, boolean, null, undefined and symbol (new type in ES6)
+    // symbol is a new type. (not string or object)
+    let p = document.getElementById("test"); // p is a DOM object.
+
+    // Assume that this object can be used by many libraries, and each library can modify this object
+    // it can add new properties or updates.
+
+    // I want to store language in p object.
+    // However, lang is already defined in p object. Collision with built-in property (dangerous) 
+    p.lang = "Turkish" ;  
+    // no collision with built-in properties, but it may collide with other libraries. It is obvious property name.
+    p.language = "Turkish" ;
+
+    // Question: you want to store language on this "p" object, what will be your property name?
+    p.__myAppName_LanguageName__ = "Turkish" ; // no collision (probably) but ugly.
+
+    // Solution is Symbol.
+    let langSymbol = Symbol('translatorApp') ; // "translatorApp" is just a description, no functionality, all symbols are unique 
+    // property type is Symbol, and langSymbol is unique, no collision with any libraries. I can store anything without
+    // any problem within langSymbol. Other libraries are not aware of langSymbol. They cannot access this property.
+    p[langSymbol] = "Turkish" ; 
+    
+    
+    console.log(Object.keys(p)); // Symbol are not enumerable, can not be shown in for-in or Object.keys
+    console.log(Object.getOwnPropertySymbols(p)) ; // You can see Symbols on an object.
+    console.log( langSymbol in p) ; // true
+
+    // REASONS :
+    // 1. Symbol is not about hiding or making something private,
+    // The aim is to prevent name collision on a shared object.
+    
+    
+    // 2. To add and/or test an interface for an object.
+    let arr = [1,2,3] ;
+    let name = "ali" ; /* String is an iterable object */
+    
+    // Symbol.iterator is global symbol (built-in symbols)
+    console.log(typeof p[Symbol.iterator] === "function"); // false
+    console.log(typeof arr[Symbol.iterator] === "function");  // true
+    console.log(typeof name[Symbol.iterator] === "function");  // true
+    
+    
+    </script>
+</body>
+</html>

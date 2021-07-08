@@ -1,0 +1,108 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     // Iterator is an object with a specific interface for iteration.
+     // It follows "iterator design pattern"
+     // Iterator object has a next() method that returns an object containing { value, done} 
+     // Iterator has a built-in pointer to a location within a collection of values, next() returns the next
+     // value in the collection. "done" is a flag to show if the iterator consumed all values or not.
+ 
+
+    class LinkedList {
+        constructor() {
+            this.head = null;
+            this.tail = null;
+            this.count = 0;
+        }
+
+        //  add a new node to the end.
+        add(val) {
+            var newNode = { value: val, next:null } ;
+            this.count++;
+            if ( this.tail === null ) {
+                this.head = this.tail = newNode ;
+            } else {
+                this.tail.next = newNode ;
+                this.tail = newNode;
+            }
+        }
+
+        toString() {
+            var result = "Length : (" + this.count + ") :  "  ;
+            var curr = this.head ;
+            while ( curr !== null) {
+                result += curr.value + "  " ;
+                curr = curr.next;
+            }
+            return result;
+        }
+
+       
+        // to turn linked list into an iterable object, implement "Symbol.iterator" interface 
+        [Symbol.iterator]() {
+            // current is a pointer to the collection (linked-list)
+            let current = this.head;
+
+            // returns an iterator object (smart pointer)
+            return {
+                    next() {
+                        if ( current !== null) {
+                            let res = { done: false, value:current.value} ;
+                            current = current.next;
+                            return res;
+                        } 
+                        return {done:true, value: undefined} ;
+                    }
+            };           
+        }
+
+    }
+    
+
+    // Iterator (a design pattern) PULLS data from the collection, one by one. From producer to consumer.
+    
+    var list = new LinkedList() ;
+    
+    list.add(5) ;
+    list.add(24) ;
+    list.add(3) ;
+    list.add(75) ;
+    list.add(-3);
+
+
+    console.log(String(list)); // it calls toString() implicitly
+    // console.log( list + "") ;
+    
+
+    // Now, we can use linked list in "for..of" loop structure
+    // Because, linked list is an iterable object.
+    // var iterator = list[Symbol.iterator]();
+    for ( let item of list) {
+        // let {done, value:item} = iterator.next() ;
+        // if done == true, it quits the loop
+        // item = value ;
+        // otherwise :
+        console.log(item);
+    }
+
+    console.log([...list]); // spread operator to convert from iterable to an array
+
+    // normally, list is a linked list, we cannot use array methods directly
+    // we convert to array  [...list] and apply array methods. 
+    const squares = [...list].map(x => x*x).join(", ");
+    console.log(squares);
+
+    // Another way to convert from iterable object to an array.
+    let items = Array.from(list) ;  
+    console.log(items);
+
+    
+    </script>
+</body>
+</html>

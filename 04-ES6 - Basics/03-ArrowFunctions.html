@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            // New Syntax (Syntactic Sugar) for functions with => 
+            // There are differences between traditional JS function and arrow function
+            /*
+             * 1. It does not have its own "this", "super", "arguments" and "new.target", they refer to the closest (lexical scope) non-arrow functions
+             * 2. Cannot be called with "new", it does not "[[Construct]]" property, cannot be used as a contructor function
+             * 3. No "prototype" property (since it is not a constructor function)
+             * 4. "arguments" is not bound therefore use named and rest parameters.
+             * 5. Cannot modify "this" because it uses lexical scope's "this", not its own "this" pointer.
+             * 
+             * Reasons for arrow functions:
+             * 1. Easy to lose track of "this" value inside a function/method, (unintended program behaviours)
+             * 2. Syntactic Sugar
+             * 3. It does not have prototype object, therefore, no waste of memory
+             */
+            
+            // for single parameter, no need paranthesis
+             let reflect = value => value ;  
+             // let reflect = function(value) { return value; };
+             
+            let sum = (num1, num2) => num1 + num2 ;
+            // let sum = function(num1, num2) { return num1 + num2; };
+            // let sum = (num1, num2) => { return num1 + num2; };
+            
+            // for an empty parameter, use paranthesis
+            let  version = () => "v2.1.1" ;
+            // let version = function() { return "v2.1.1"; };
+            
+            // empty function
+            let empty = () => {} ;
+            // let empty = function() { } ;
+            
+            // to return an object, not to confuse with curly braces of body, use paranthesis
+            let std = id => ({ name : "ali", id: id})  ; 
+            // let std = function(id) { return { name : "ali", id: id}; };
+            
+            // In callbacks
+            let sorted = [5,2,7,1,8,3].sort((a,b) => a-b) ; 
+            console.log(sorted);
+
+            // IIFE with arrow functions (Immediately Invoked Function Expression)
+            let person = ((name) => {
+                 return {
+                    getname: function() { return name; }  
+                 };
+            })("ali") ;
+
+            person.getname();
+            
+            
+            // "this" binding confusion
+            // In ES5
+
+            // Problem
+            let course1 = {
+                name : "CTIS478",
+                display : function() {
+                    window.setTimeout(function(){
+                      console.log("course 1 - problem");
+                      console.log(this) ; // setTimeout sets "this" as "window" when it calls the callback.
+                    }, 2000) ;
+                }
+            }
+            course1.display();
+
+            // closure solution ( callback function remembers "that")
+            let course2 = {
+                name : "CTIS478",
+                display : function() {
+                    let that = this ; 
+                    window.setTimeout(function(){
+                      console.log("course 2 - closure solution");
+                      console.log(that) ; // setTimeout sets "this" as "window" when it calls the callback.
+                    }, 2000) ;
+                }
+            }
+            course2.display();
+
+            // bind() solution, bind() returns a wrapper function containing the orginal one.
+            // when setTimeout calls wrapper functions, the wrapper function calls the function it contains with the 
+            // parameters given in bind method. setTimeout --> wrapper --> callback with orginal "this"
+            let course3 = {
+                name : "CTIS478",
+                display : function() {
+                    window.setTimeout((function(){
+                      // bound Function has a fixed "this" with bind method. No matter how setTimeout call the callback function  
+                      console.log("course 3 - bind solution");
+                      console.log(this) ; 
+                    }).bind(this), 2000) ;
+                }
+            }
+            course3.display();
+
+            
+            // ES6 way, when calling arrow function, no this pointer is sent.
+            // Therefore, it uses "this" pointer in its lexical scope (display method).
+            let course4 = {
+                name : "CTIS478",
+                display : function() {
+                    // "this" refers to course4
+                    window.setTimeout(() => {
+                      console.log("course 4 - arrow function solution");  
+                      console.log(this) ;  // "this" accesses the EC of Lexical Scope, it uses display method's "this"
+                    }, 2000) ;
+                } 
+            };
+            course4.display();
+
+            // In event handling, "this" problem.
+            // Event handler called with "window", "global" or "undefined" this
+            // You have to use, closure, bind or arrow function.
+            const clickable = {
+                title : "Hello World",
+                setup : function() {
+                    window.addEventListener("click", function(){
+                      console.log(this.title);
+                    });
+                }
+            }
+            clickable.setup();
+            
+
+            // Another Example about "this"
+            // in traditional function, "this" is determined by the caller. 
+            // in arrow function, "this" is determined by its lexical scope. (it depends where the function is created)
+            let car = {
+                name: "Volvo",
+                getFn : function() {
+                    console.log("getFn:");
+                    console.log(this);
+                },
+                getArrow: () => {
+                    console.log("getArrow:");
+                    console.log(this);
+                }
+            };
+
+            car.getArrow(); // car.getArrow.call(), no "this" in its EC, therefore it uses lexical scope's "this"
+            car.getFn(); // car.getFn.call(car); 
+            
+            // Arrow function cannot be used as a method.
+            // It is useful as a callback function in methods. It remembers "this" in lexical scope.
+
+        </script>
+    </body>
+</html>

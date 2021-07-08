@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+    </head>
+    <body>
+        <script>
+            // "use strict" ;
+            
+            // PROPERTY ATTRIBUTES
+            // Data Properties : [ "value", "writable", "enumerable", "configurable" ]
+            // Accessor Properties : [ "get", "set", enumerable", "configurable" ]
+            
+            var person = {
+                name : "Ali"
+            } ;
+            
+            console.log( Object.keys(person)) ;
+            
+            Object.defineProperty(person, "name", { enumerable : false}) ; // modify existing property "name" attributes
+            console.log( "name" in person ? "name exists" : "name not exists") ; // it exists but cannot be enumerable
+            console.log( Object.keys(person)) ;
+            
+            // configurable:false means cannot delete property, cannot change other attributes such as writable
+            Object.defineProperty(person, "name", { configurable : false}) ; // lock the property.
+           // delete person.name ; // not possible
+           // Object.defineProperty(person, "name", { configurable : true}) ; // not possible
+            
+            // a new property
+            // person.id = 1234 ;
+            Object.defineProperty(person, "id", { value: 1234, enumerable: true, configurable: true, writable: true}) ;
+            
+            
+            Object.defineProperty(person, "age", {value : 35}) ; // enumerable:false, writable:false, configurabel: false
+            console.log( Object.keys(person)) ;
+            person.age = 42 ; // does not change. (constant)
+            console.log(person.age);
+            
+            // define accessor with custom attributes.
+            Object.defineProperty(person, "upper", {
+               get: function() { return this.name.toUpperCase(); } ,
+               enumerable : true ,
+               configurable: true
+            });
+            
+            console.log( Object.keys(person)) ;
+            console.log( person.upper) ;
+            
+            // Retrieve Property Attributes
+            var descriptor = Object.getOwnPropertyDescriptor(person, "age") ;
+            console.log(descriptor);
+            
+            // OBJECT ATTRIBUTES
+            // [[Extensible]]
+            
+            // prevent extensibility
+            console.log("person is extensible " + Object.isExtensible(person)) ;
+            Object.preventExtensions(person) ; // cannot add new property 
+            person.sayHello = function() { console.log("Hello"); } ; // does not add new property/method
+           // console.log( person.sayHello()) ;  // throws exception
+           
+           // Sealing an object.
+           // Turn object "nonextensible", all properties are "configurable : false"
+           // You can not add new property, delete a property, change property attribs.
+           // You can only read and write to its properties.
+           Object.seal(person) ;
+           person.lastname = "Gül" ;  // does not add new property
+           delete person.id ;  // does not delete "id"
+           console.log(person);
+            
+            
+            // Freezing an object.
+            // nonextensible, can't add new property, delete a property, cannot modify prop. attribs.
+            // cannot write to any properties.
+            
+            var dog = {
+               breed : "çoban",
+               name : "Karabaş"
+            };
+            
+            Object.freeze(dog) ;
+            dog.age = 6 ;
+            dog.name = "Kocabaş" ;
+            delete dog.breed ;
+            console.log(dog);
+            
+            // To check, 
+            // Object.isExtensible(), 
+            // Object.isSealed()
+            // Object.isFrozen()
+            
+            
+        </script>
+        
+    </body>
+</html>

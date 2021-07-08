@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+           // "use strict";
+            
+            // functions are "first-class" objects
+            // it means you can use function as a normal value,
+            // you can send as a parameter, return from a function and so on.
+            // non-method function, function declaration
+            function add1(n1, n2) {
+                return n1 + n2 ;
+            }
+            
+            // function expression
+            var add2 = function(n1, n2) {
+                
+                return n1 + n2 ;
+            } ;
+            
+            // Function is an object.
+            var add3 = new Function("n1", "n2", "return n1 + n2") ;
+            
+            
+            console.dir(add1) ;
+            console.dir(add2) ;
+            
+            // Calling a function
+            // add1(3,5) is equivalent to  add1.call(window,3,5) and add1.call(null, 3,5) in "strict mode"
+            console.log(add1.call(null, 3, 5)) ; // call(this, args), same as add1(3,5)
+            console.log(add1.apply(null, [3, 5])) ; // apply(this, [args])
+            
+            // Calling a method
+            // Object and methods
+            // get is a method function
+            // {} are used to create objects, and it is called object literal.
+            var person = {
+                name: "ali",
+                get : function(title) {
+                    return title + " " + this.name ;
+                }
+            } ;
+            
+            // "this" pointer is "person" ojbect.
+            console.log( person.get("Mr.") ) ; // person.get.call(person, "Mr.") or person.get.apply(person, ["Mr."]) ; 
+            
+            // we can change "this" pointer for get() method.
+            var animal = { name : "cat", age: 5 } ;
+            console.log( person.get.call(animal, "Mr.") ) ;
+			
+			// what happens?
+			var getFn = person.get ;  
+            // getFn is a global function, not method.
+			console.log( getFn("Mr. ") ) ; // getFn.call(window, "Mr.") ; it lost context.
+
+        </script>
+         
+    </body>
+</html>

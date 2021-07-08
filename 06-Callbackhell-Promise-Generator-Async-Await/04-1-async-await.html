@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery-3.1.1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>Text #1</div>
+    <div>Text #2</div>
+    <div>Text #3</div>
+
+    <script>
+     
+      // ES2017 , not available in ES6/ES2015
+      // This function does not block the execution of javascript, JS Engine still checks callback queue and executes one by one.
+      // await waits for a promise to be fulfilled.
+      (async function () {
+        let p = await animate( $("div:first"), {"font-size" : "30px"}, 2000); 
+        console.log(`First value is ${p}`);
+        await animate( $("div:eq(1)"), {"font-size" : "30px"}, 2000);
+        await animate( $("div:last"), {"font-size" : "30px"}, 2000);
+        $("body").append("<p>Animation is over</p>");
+      })();
+
+      
+
+
+      // No Need a global variable to call its next() method.
+      function animate(obj, animParams, duration) {
+         return new Promise(function(resolve, reject) {
+            obj.animate(animParams, duration, () => {
+                resolve(10);   
+            });
+         });
+     }
+
+     $("body").prepend("<p>Animation Started</p>");
+
+    </script>
+</body>
+</html>

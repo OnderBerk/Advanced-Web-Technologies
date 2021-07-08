@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+             
+           // default parameters in ES5
+           function request1(url, timeout) {
+               timeout = timeout || 1000 ; // returns second value if the first one is falsy
+               console.log( url, timeout) ;
+           }
+           request1("hello.html") ;
+           request1("test.html", 0) ; // problem, it does not take 0, 0 is falsy, and sets timeout to 1000!!!
+           
+           // better approach, but for a simple operation many codes are required
+           function request2(url, timeout) {
+               timeout = (typeof timeout !== "undefined") ? timeout : 2000 ;
+               console.log( url, timeout) ;
+           }
+           
+           request2("test.html", 0) ;
+           
+           // ES6
+           function request3(url, timeout = 1000) {
+               console.log(url, timeout) ;
+           }
+           request3("es6.html") ;
+           
+           // variable number of parameters.
+           // ES5 uses arguments array-like object (cannot use array methods on it)
+           // ES6 uses "rest" operator "..." which is an array, must be at the end, and only one rest.
+           // This example shows how to pick some properties from an object, "partial cloning"
+           function pick(object, ...keys) {
+               let result = Object.create(null) ;
+               console.log( keys.join(" , ")); // arguments.join() does not work.
+               for ( let prop of keys) {
+                   result[prop] = object[prop] ;
+               }
+               return result ;
+           }
+           
+           let person = { name: "ali", id: 1234, department : "CTIS" } ;
+           let personData = pick( person, "name", "department") ;
+           console.log(personData) ;
+           
+           // Spread Operator (uses the same operator ...Array)
+           let nums = [3,5,7,3,9,14,2,13,5] ;
+           // Math.max() requires separate parameters
+           //let m = Math.max(3,5,7,3,9,14,2,13,5) ;  //max requires separate arguments not an array.
+           // Solution 1:
+           //let m = Math.max.apply(Math, nums) ; // for a simple task, we need to write many things.
+           let m = Math.max(...nums, 2,5, 76) ; // ...nums spread operator.
+          
+           
+           console.log(m);
+           
+
+        </script>
+        <h1>Another Script</h1>
+        <script>
+            let tt = "oohh.." ;
+        </script>
+    </body>
+</html>

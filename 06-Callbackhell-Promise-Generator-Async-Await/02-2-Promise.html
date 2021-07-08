@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="jquery-3.1.1.js"></script>
+    </head>
+    <body>
+       <script>
+    // CHAINING PROMISES 
+    // Every then() and catch() methods return a NEW promise.
+    // if any promise rejected, all promises in the chain are rejected.
+    function asyncTask() {
+        return new Promise((resolve, reject) => {
+            $("body").append("<p>First Promise is created</p>");
+            setTimeout(() => {
+                $("body").append("<p>First Promise is Resolved after 3 seconds</p>");
+                resolve(10);  
+               // reject(-1) ;
+            }, 3000) ;
+        });
+    }
+
+    // Start asynchronous task
+    asyncTask()
+    .then((val) => {
+        $("body").append("<p>First Promise's then callback executes Value: " + val + "</p>");
+         throw 100;  // it is like "return Promise.reject(100)"
+       // return 15; // it is like "return Promise.resolve(15)"
+    })
+    .then( (val) => {
+    $("body").append("<p>Second Promise's then callback executes Value: " + val + "</p>");
+        return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            $("body").append("<p>Inside setTimeout() after 2 seconds</p>");
+            resolve(20);
+        },2000);
+        });       
+    })
+    .then((val) => {
+        $("body").append("<p>setTimeout Promise's resolved to Value: " + val + "</p>");
+    })
+    .catch((e) => {
+    $("body").append("<p>Exception/Error Value: " + e + "</p>");
+    }) ;
+
+    $("body").append("<p>Last Statement in primary application</p>");
+
+
+    // Promise.then() and Promise.catch() return a new Promise object in "pending" state.
+    // p1 .. p5 are different promise objects.
+   /*  let p1 = asyncTask(); // pending
+    
+    // add callback to p1 when p1 is fulfilled with resolve.
+    // p1.then() returns a new unfullfilled Promise, like new Promise(). 
+    let p2 = p1.then((val) => {
+        $("body").append("<p>First Promise's then callback executes Value: " + val + "</p>");
+        // throw 100;  // Promise.reject(100)
+        return 15; // like Promise.resolve(15) that returns a new  fullfilled/resolved Promise
+    });
+
+    let p3 = p2.then((val) => {
+        $("body").append("<p>Second Promise's then callback executes Value: " + val + "</p>");
+        // throw 100;
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log("inside settimeout");
+                resolve(20);
+            },2000);
+        });
+    });
+    let p4 = p3.then((val) => {
+        $("body").append("<p>setTimeout Promise's resolved to Value: " + val + "</p>");
+    }); 
+
+    let p5 = p4.catch((e) => {
+        $("body").append("<p>Exception/Error Value: " + e + "</p>");
+    });
+
+    $("body").append("<p>Last Statement in primary application</p>");
+*/
+
+    </script> 
+    </body>
+</html>

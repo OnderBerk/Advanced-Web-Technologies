@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // Class 1
+     function Furniture(type, price) {
+         this.type = type ;
+         this.price = price ;
+     }
+     Furniture.prototype.getPrice = function() { return this.price} ;
+
+    // Class 2
+    function Car(brand, model, color, price) {
+        this.brand = brand ;
+        this.model = model ;
+        this.color = color ;
+        this.price = price ;
+    }
+
+    Car.prototype.getPrice = function() { return this.price} ;
+
+    // Polymorphism (duck typing)
+    function displayPrices(list) {
+       list.forEach( function(item) {
+          //if ( item.getPrice)
+          console.log(item.getPrice());
+       });   
+    }
+
+    // In Javascript, we can mix different type of objects.
+    var items = [ new Furniture("Ikea - Chair", 300),
+                  new Car("Opel", "Corsa", "red", 55000),
+                  new Furniture("Mudo - Table", 5200),
+                  new Car("Toyota", "Corolla", "red", 68000),
+                  new Car("Nissan", "XTrailer", "red", 145000),
+                  //new Object()  // fails at runtime
+    ] ;
+    
+
+    
+
+   
+    displayPrices(items) ;
+
+    
+    </script>
+</body>
+</html>

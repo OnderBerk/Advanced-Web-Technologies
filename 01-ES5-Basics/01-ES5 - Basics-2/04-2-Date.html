@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      // DATE
+      // Create
+      var now = new Date() ; 
+      var currentTimestamp = Date.now();
+
+      var newYear = new Date("2019-01-01T00:00:00"); 
+      // or month starts from 0
+      var newYear2 = new Date(2019,0,1,0,0,0);
+      console.log( newYear.getTime() === newYear2.getTime()) ; // true, compare its timestamps, <, >, ==
+
+
+      var diff = new Date(newYear - now) ;
+      console.log(diff);
+      console.log(Date.now());
+      
+  
+      // Date built-in object is not so advanced, this is why we will use moment.js for date manipulation.
+    </script>
+</body>
+</html>

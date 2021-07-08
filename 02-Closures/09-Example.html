@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+	/* This is debug version of memoized function */
+    /*function memoized(fn) {
+        var cache = {} ;
+        return function(arg) {
+            console.log(JSON.stringify(cache));
+            if (cache[arg]) {
+                console.log("from cache : " + cache[arg]);
+                return cache[arg];
+            }
+            cache[arg] = fn(arg);
+            console.log("first calculation : " + cache[arg]);
+            return cache[arg];
+            
+        }
+    }
+    */
+
+	/* Question : For the following code segment, trace the current objects (function objects), execution 
+	   Contexts, and runtime call stack */
+       
+    function memoized(fn) {
+        var cache = {} ;
+        return function(arg) {
+            return cache[arg] || (cache[arg] = fn(arg));
+        }
+    }
+
+    function factorial(n) {
+        var res = 1;
+        for ( var i=1; i<n; i++) {
+            res *= i ;
+        }
+        return res;
+    }
+    
+    var fastFact = memoized(factorial);   
+    console.log(fastFact(30)) ; 
+    console.log(fastFact(30)) ; 
+
+   // fastCos remembers previous cosine values since it caches them.
+   // In the first case, it calculates and stores in its cache, in further calls with the same parameter,
+   // it uses its own cache.
+    var fastCos = memoized( function ( angle ) {
+        return Math.cos(angle * Math.PI / 180) ; // degree to radian conversion
+    });
+
+    console.log(fastCos(30)) ;
+    console.log(fastCos(30)) ;
+    
+
+	/* Below is not about the question, it just shows how caching occurs in a real life application */
+	/* It caches intermediate results by using recursive method. */
+    /*
+    var fastFactorial = memoized(function(n){
+           if ( n === 0) return 1 ;
+           return n * fastFactorial(n-1);
+    });
+
+    fastFactorial(5);
+    fastFactorial(5);
+    fastFactorial(3);
+    */
+    </script>
+</body>
+</html>

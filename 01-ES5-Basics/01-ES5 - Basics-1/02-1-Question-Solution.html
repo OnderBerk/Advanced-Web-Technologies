@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var repeatName = {
+                name : "ctis478",
+                display : function() {
+                    // here "this" refers to repeatName object.
+                    // this.name returns "ctis478"
+                    var fn = (function(){
+                        // "this" refers to global object in non-strict mode, null in strict mode
+                        // however, we can overwrite this default value by .bind()
+                        console.log(this);
+                        console.log("Name after 3 seconds : " + this.name ) ;
+                    }).bind(this) ;
+
+                    setTimeout( fn, 3000) ;
+
+                    /*
+                     setTimeout((function(){
+                        console.log("Name after 3 seconds : " + this.name ) ;
+                    }).bind(this), 3000) ;
+                    */
+                }
+            };
+    repeatName.display() ; // repeatName.display.call(repeatName)
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery-3.1.1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>Text #1</div>
+    <div>Text #2</div>
+    <div>Text #3</div>
+
+    <script>
+     
+     // run() calls next() method of generator function until there is no item to consume.
+     // run iterates over generator function in its argument.
+     let iter = (function*() {
+        // The following code looks like sync but it works as async. 👋
+        yield animate( $("div:first"), {"font-size" : "30px"}, 2000); 
+        yield animate( $("div:eq(1)"), {"font-size" : "30px"}, 2000);
+        yield animate( $("div:last"), {"font-size" : "30px"}, 2000);
+        $("body").append("<p>Animation is over</p>");
+      })() ;
+     
+    //   var animation = generator();
+    //   animation.next();
+
+    iter.next().value
+   
+
+    // animate function does not care about generator function any more.
+    function animate(obj, animParams, duration) {
+         return new Promise(function(resolve, reject) {
+            obj.animate(animParams, duration, () => {
+                resolve();   
+            });
+         }); 
+     }
+    
+     $("body").prepend("<p>Animation Started</p>");
+
+    </script>
+</body>
+</html>

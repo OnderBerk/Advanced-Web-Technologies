@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery-3.1.1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>Text #1</div>
+    <div>Text #2</div>
+    <div>Text #3</div>
+
+    <script>
+       
+      function *generator() {
+        // The following code looks like sync but it works as async. 👋
+       // try {
+        yield animate( $("div:last"), {"font-size" : "30px"}, 2000);
+        
+        yield animate( $("div:eq(1)"), {"font-size" : "30px"}, 2000);
+        yield animate( $("div:first"), {"font-size" : "30px"}, 2000); 
+        
+        $("body").append("<p>Animation is over</p>");
+        // } catch(e) {
+        //     console.log("Error catch " + e.message);
+        // }
+      }
+    
+      // Manage generator() manually with next()
+      var animation = generator();
+      animation.next();
+
+      // async task access global variable which is not flexible.
+      function animate(obj, animParam, duration) {
+        obj.animate(animParam, duration, () => { animation.next(); } );
+      }
+      
+      $("body").prepend("<p>Animation Started</p>");
+
+    </script>
+</body>
+</html>

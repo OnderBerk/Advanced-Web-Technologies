@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // In addition to array, two data structures come with ES6.
+    // map and set
+
+    // In ES5, non-array objects are used to simulate maps and sets.
+    // However, it is problematic because of type conversion to string.
+    const map = Object.create(null) ;
+
+    map.cat = "kedi"; // map["cat"] = "kedi" ;
+    let val = map["cat"] ;  // returns kedi.
+    map.id = 0 ;
+    map[{}] = 5 ; // ?? {} -> to "[object Object]"
+    map[[0]] = 6 ; // map[0] -> 6, since [0] -> 0
+    // test the existence of id in map
+    console.log(map.id ? "Yes" : "No");  // No, but it actually exists.
+
+    // SETS
+    // ES6: Sets, no type coersion (implicity type conversion), 10 and "10" are different
+    // Set constructor can get any iterable object as an argument.
+    // Set stores references to objects (it does not copy)
+    let courses = new Set();
+    courses.add("255") ;
+    courses.add("251") ;
+    courses.add("264") ;
+    courses.add("255") ; // ignored
+    console.log(courses.size);
+    console.log(courses); // {"255", "251", "264"}
+
+    let nums = new Set([1,2,3,3,3,3]) ;
+    console.log(nums); // {1, 2, 3}
+    
+    let letters = new Set("hello world");  // string is an iterable object
+    console.log(letters);  // 8 distinct letters.
+
+    // to test, has()
+    console.log(nums.has(3)); // true
+
+    nums.delete(3) ;
+    console.log(nums.has(3)); // false
+
+    nums.clear(); // to delete all items
+
+    // convert set to an array
+    let array = [...courses] ;
+    console.log(array);
+
+    // Garbage Collection
+    let s = new Set(), person = {name: "ali"} ;
+    s.add(person);
+    person = null;
+    // what happens to the object? it is not deleted since set has a reference to that object.
+    // this is called strong sets. 
+    // Weak set does not prevent garbage collection if the reference in weak set is the last index.
+    // Weak set can store only object references but not primitives.
+
+
+    // MAPS
+    let cache = new Map();
+    cache.set("cat", "kedi") ;
+    cache.set("ali", {id: 0, "lastname" : "gül"}) ;
+    cache.set("year", 2019) ;
+
+    console.log(cache.get("ali"));
+
+    console.log(cache.has("year")); // true
+    console.log(cache.has("title")); // false
+
+    // key can be anything.
+    let key = {} ;
+    cache.set(key, "empty object");
+    console.log(cache.get({})); // undefined
+    console.log(cache.get(key)); // undefined
+
+    cache.delete(key);
+    cache.clear();
+
+    // Init
+    cache = new Map([["name", "ali"], ["year", 2019]]) ; // array of pairs
+    console.log(cache); // {"name" => "ali", "year" => 2019}
+    </script>
+</body>
+</html>

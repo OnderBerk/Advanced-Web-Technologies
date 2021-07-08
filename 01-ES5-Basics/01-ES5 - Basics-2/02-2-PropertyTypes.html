@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+    </head>
+    <body>
+        <script>
+            // Two Types of properties: Data and Accessors
+
+            var person = {
+                _name : "Ali",  // Data
+                get name() {    // Accessor
+                    console.log("Reading name : " + this._name) ;
+                    return this._name ;
+                },
+                set name(val) {
+                    console.log("name setter is called ") ;
+                   if ( val.length === 0) {
+                       this._name = "Unknown" ;
+                   }  else {
+                       this._name = val ;
+                   }
+                },
+                get hello() {
+                    console.log("Not implemented yet");
+                    return "Not yet" ;
+                }
+            } ;
+            
+            var test = person.name ; // name is a getter, not a data property
+            test = person.hello ;
+            
+            person.name = "serkan" ;
+            console.log( person.name) ;
+            
+            console.log( Object.keys(person)) ;
+            
+        </script>
+    </body>
+</html>

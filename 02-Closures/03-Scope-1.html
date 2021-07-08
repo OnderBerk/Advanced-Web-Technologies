@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var a = 10;
+    function f1(n) {
+        var count = n;
+        age = 5 ;
+        console.log(count);
+        console.log(a);
+		return count + 1 ;
+    }
+    
+    var result = f1(a);
+    console.log(result);
+    console.log(count);
+    
+
+    /*
+    GEC = Global Execution Context, CEX : Current Execution Context ( an internal register/variable of JS Engine),
+	GC: Garbage Collector, F1C = F1 Execution Context, U: undefined,
+	Fn1: temporary function reference
+
+    Stage 1 : After hoisting (before running program)
+    GEC = { a: U, f1: Fn1, result: U, this: window/null/global, parent: null}  // "this" depends on runtime environment(Browser, NodeJS, etc)
+	CEX = GEC 
+    Fn1 = { name: "f1", 
+           arguments: ["n"], 
+           boundThis: U, 
+           code: "var count=n; ... ;return count+1",
+           [[Scope]] : CEX -> GEC, // Lexical Scope of f1
+          }
+	
+		  
+    Stage 2 : JS Engine executes statements one by one.
+	a = 10 ; // JS Engine uses CEX to access variables, it changes a:U to a:10
+    Calling f1(a): before running : f1.call(window/null/global, a) ;  
+    Calling a function (call method) creates a new execution context with function parameters and function local variables and declarations (hoisting)	
+    In Heap memory :
+	F1C = { n: 10, count: undefined, this: window/null/global, parent: Fn1.Scope -> GEC }  // this is called Execution Context of f1
+	CEX = F1C
+    Fn1 = { ..., [[Scope]]: GEC}  
+    In Call Stack : [{f1(10), nextStatement: 20 (line number)}]
+
+    After return statement:
+    In Heap memory 
+    Fn1 = { ..., [[Scope]]: GEC} 
+    F1C is deleted because it is not reachable any more.
+    In Call Stack : []
+    GEC = { ..., result: 11, age: 5,...}
+    JS Engine executes the statement at line number 20, which is console.log(result)
+
+
+    */
+    </script>
+</body>
+</html>
